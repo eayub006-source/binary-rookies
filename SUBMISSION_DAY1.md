@@ -1,3 +1,7 @@
+## Team
+**Team Name:** BINARY ROOKIES  
+**Team Members:** Eshal Ayub, Momna Khalid, Ayan Asif Hashmi, Fahad Mehmood
+
 # Day 1 Submission: Anonymous Campus Rumor System
 
 **Problem understanding, assumptions, proposed solution, system architecture, and trust score mechanism.**
