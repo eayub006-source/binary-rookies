@@ -14,16 +14,18 @@ To scope MCP to a single project (recommended), set the URL to:
 
 ---
 
-## Running migrations
+## Connect the database (create tables)
 
-1. Open your [Supabase project](https://supabase.com/dashboard) → **SQL Editor**.
-2. Copy the contents of `migrations/001_initial_schema.sql` and run it.
+The backend connects using `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in `backend/.env`. If you see "Could not find the table 'public.users'", the **tables were never created** in your Supabase project.
 
-Or with Supabase CLI (if linked):
+**One-time setup:**
 
-```bash
-supabase db push
-```
+1. Open [Supabase Dashboard](https://supabase.com/dashboard) → your project → **SQL Editor**.
+2. Click **New query**.
+3. Open **`supabase/run-this-in-sql-editor.sql`** in this repo, copy the **entire** file, paste into the editor, click **Run**.
+4. Restart your backend. Then `GET http://localhost:3001/api/health/db` should return `{"ok":true,"db":"connected"}`.
+
+That file creates the `users`, `rumors`, and `votes` tables and inserts seed data.
 
 ## Env (backend)
 

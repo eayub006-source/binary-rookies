@@ -1,0 +1,43 @@
+// Supabase (PostgreSQL). Get DATABASE_URL and DIRECT_URL from Dashboard → Connect → ORMs → Prisma.
+// Replace [YOUR-PASSWORD] with your database password (Project Settings → Database).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  anonymous_id     String   @id
+  reputation_score Float    @default(0.1)
+  accuracy_metric  Float?   // Agreement with eventual consensus; used with reputation for vote weight (§4.1, §5.2)
+  created_at      DateTime @default(now())
+  rumors          Rumor[]  @relation("Creator")
+  votes           Vote[]
+}
+
+model Rumor {
+  id               String    @id @default(uuid()) @db.Uuid
+  content          String
+  creator_id       String
+  created_at       DateTime  @default(now())
+  deleted_at       DateTime?
+  final_trust_score Float?
+  finalized_at     DateTime?
+  creator          User      @relation("Creator", fields: [creator_id], references: [anonymous_id])
+  votes            Vote[]
+}
+
+model Vote {
+  rumor_id  String   @db.Uuid
+  voter_id  String
+  vote      String   // 'true' | 'false' | 'neutral'
+  created_at DateTime @default(now())
+  rumor     Rumor    @relation(fields: [rumor_id], references: [id], onDelete: Cascade)
+  voter     User     @relation(fields: [voter_id], references: [anonymous_id])
+  @@id([rumor_id, voter_id])
+}

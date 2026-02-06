@@ -1,4 +1,4 @@
-export { supabase } from './supabase.js';
+export { default as prisma } from './prisma.js';
 export {
   rumorsActive,
   rumorById,

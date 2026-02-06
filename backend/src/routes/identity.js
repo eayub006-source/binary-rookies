@@ -24,8 +24,10 @@ router.post('/register-or-lookup', async (req, res) => {
     const result = await registerOrLookup(fingerprint);
     res.json(result);
   } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: 'Identity registration failed' });
+    console.error('Identity error:', e);
+    const message = e.message || 'Identity registration failed';
+    const code = e.code === 'PGRST116' || e.message?.includes('relation') ? 503 : 500;
+    res.status(code).json({ error: message });
   }
 });
 

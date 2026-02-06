@@ -31,11 +31,14 @@ export function IdentityProvider({ children }) {
     }
   }, [anonymousId]);
 
+  const clearError = useCallback(() => setError(null), []);
+
   const value = {
     anonymousId,
     error,
     loading,
     ensureIdentity,
+    clearError,
     isReady: !!anonymousId,
   };
 

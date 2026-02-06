@@ -1,4 +1,4 @@
-import { supabase } from '../db/supabase.js';
+import prisma from '../db/prisma.js';
 import { rumorById } from '../db/queries.js';
 
 const VALID_VOTES = new Set(['true', 'false', 'neutral']);
@@ -10,36 +10,30 @@ export async function castVote(rumorId, voterId, vote) {
     e.statusCode = 400;
     throw e;
   }
-  const { data: rumor, error: rumorErr } = await rumorById(rumorId);
-  if (rumorErr) throw rumorErr;
+  const rumor = await rumorById(rumorId);
   if (!rumor) {
     const e = new Error('Rumor not found or deleted');
     e.statusCode = 404;
     throw e;
   }
-  const { data: existing } = await supabase
-    .from('votes')
-    .select('rumor_id')
-    .eq('rumor_id', rumorId)
-    .eq('voter_id', voterId)
-    .maybeSingle();
+  const existing = await prisma.vote.findUnique({
+    where: { rumor_id_voter_id: { rumor_id: rumorId, voter_id: voterId } },
+  });
   if (existing) {
     const e = new Error('Already voted on this rumor');
     e.statusCode = 409;
     throw e;
   }
-  const { data, error } = await supabase
-    .from('votes')
-    .insert({ rumor_id: rumorId, voter_id: voterId, vote: v })
-    .select('*')
-    .single();
-  if (error) {
-    if (error.code === '23505') {
-      const e = new Error('Already voted on this rumor');
-      e.statusCode = 409;
-      throw e;
+  try {
+    return await prisma.vote.create({
+      data: { rumor_id: rumorId, voter_id: voterId, vote: v },
+    });
+  } catch (e) {
+    if (e.code === 'P2002') {
+      const err = new Error('Already voted on this rumor');
+      err.statusCode = 409;
+      throw err;
     }
-    throw error;
+    throw e;
   }
-  return data;
 }

@@ -6,13 +6,25 @@ body {
   font-family: system-ui, sans-serif;
 }
 .app {
-  max-width: 640px;
+  max-width: 680px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
+.app-header { margin-bottom: 1.5rem; }
+.about { margin: 0.5rem 0; }
+.about-toggle { font-size: 0.9rem; color: #666; background: none; border: none; cursor: pointer; text-decoration: underline; }
+.about-content { margin-top: 0.5rem; padding: 1rem; background: #f5f5f5; border-radius: 8px; font-size: 0.9rem; }
+.about-content ul { margin: 0.5rem 0 0 1.25rem; }
+.about-ref { margin-top: 0.75rem; font-size: 0.85rem; color: #666; }
 .identity-gate { margin: 2rem 0; }
-.identity-gate-error { color: #c00; }
-.identity-gate-dev { color: #666; font-size: 0.9rem; }
+.identity-gate-error-block { margin-bottom: 0.75rem; }
+.identity-gate-error { color: #e57373; margin: 0 0 0.25rem; }
+.identity-gate-retry { margin-left: 0.5rem; font-size: 0.85rem; }
+.identity-gate-dev { color: #888; font-size: 0.9rem; }
+.identity-gate-captcha { margin: 1rem 0; min-height: 78px; }
+.identity-gate-recaptcha-help { margin: 1rem 0; padding: 0.75rem; background: #fff3cd; border-radius: 6px; font-size: 0.9rem; }
+.identity-gate-recaptcha-help ul { margin: 0.5rem 0 0 1.25rem; }
+.identity-gate-hint { font-size: 0.9rem; color: #888; margin: 0.5rem 0; }
 .identity-gate button { margin-top: 0.5rem; }
 .rumor-form textarea { width: 100%; margin-bottom: 0.5rem; }
 .form-error, .list-error { color: #c00; }

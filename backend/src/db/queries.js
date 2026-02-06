@@ -1,60 +1,50 @@
-import { supabase } from './supabase.js';
+import prisma from './prisma.js';
 
 /**
- * Query builders that always exclude soft-deleted rumors for trust/reputation (§5.4).
- * Use these for any read that feeds into trust score or reputation updates.
+ * Queries that exclude soft-deleted rumors for trust/reputation (§5.4).
  */
 
-/** Rumors that are not soft-deleted (for listing and trust engine). */
-export function rumorsActive() {
-  return supabase.from('rumors').select('*').is('deleted_at', null);
+export async function rumorsActive() {
+  return prisma.rumor.findMany({ where: { deleted_at: null }, orderBy: { created_at: 'desc' } });
 }
 
-/** Single rumor by id, only if not deleted. */
-export function rumorById(id) {
-  return supabase.from('rumors').select('*').eq('id', id).is('deleted_at', null).maybeSingle();
+export async function rumorById(id) {
+  return prisma.rumor.findFirst({ where: { id, deleted_at: null } });
 }
 
-/** Single rumor by id (even if deleted; for auth check on delete). */
-export function rumorByIdAny(id) {
-  return supabase.from('rumors').select('*').eq('id', id).maybeSingle();
+export async function rumorByIdAny(id) {
+  return prisma.rumor.findUnique({ where: { id } });
 }
 
-/** All rumors including deleted (e.g. optional "archived" view). */
-export function rumorsAll(includeDeleted = false) {
-  const q = supabase.from('rumors').select('*').order('created_at', { ascending: false });
-  if (!includeDeleted) return q.is('deleted_at', null);
-  return q;
+export async function rumorsAll(includeDeleted = false) {
+  const where = includeDeleted ? {} : { deleted_at: null };
+  return prisma.rumor.findMany({ where, orderBy: { created_at: 'desc' } });
 }
 
-/** Votes for a given rumor (use only for non-deleted rumors in trust calc). */
-export function votesByRumorId(rumorId) {
-  return supabase.from('votes').select('*').eq('rumor_id', rumorId);
+export async function votesByRumorId(rumorId) {
+  return prisma.vote.findMany({ where: { rumor_id: rumorId } });
 }
 
-/** Votes for a given voter. Filter by rumor.finalized_at when computing reputation. */
-export function votesByVoterId(voterId) {
-  return supabase.from('votes').select('*').eq('voter_id', voterId);
+export async function votesByVoterId(voterId) {
+  return prisma.vote.findMany({ where: { voter_id: voterId } });
 }
 
-/** User by anonymous_id. */
-export function userByAnonymousId(anonymousId) {
-  return supabase.from('users').select('*').eq('anonymous_id', anonymousId).maybeSingle();
+export async function userByAnonymousId(anonymousId) {
+  return prisma.user.findUnique({ where: { anonymous_id: anonymousId } });
 }
 
-/** All users (for batch reputation updates). */
-export function usersAll() {
-  return supabase.from('users').select('*');
+export async function usersAll() {
+  return prisma.user.findMany();
 }
 
-/** Rumors that are past finalization window and not yet finalized (for cron). */
-export function rumorsToFinalize(finalizationDays = 7) {
+export async function rumorsToFinalize(finalizationDays = 7) {
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - finalizationDays);
-  return supabase
-    .from('rumors')
-    .select('*')
-    .is('deleted_at', null)
-    .is('finalized_at', null)
-    .lt('created_at', cutoff.toISOString());
+  return prisma.rumor.findMany({
+    where: {
+      deleted_at: null,
+      finalized_at: null,
+      created_at: { lt: cutoff },
+    },
+  });
 }
