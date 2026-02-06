@@ -1,45 +1,285 @@
+/* ===== Binary Rookies — Presentation theme ===== */
+:root {
+  --primary: #778873;
+  --primary-dark: #5c6b5a;
+  --primary-light: #8f9d8a;
+  --secondary: #A1BC98;
+  --secondary-dark: #7d9974;
+  --accent: #D2DCB6;
+  --accent-dark: #b8c49a;
+  --background: #F1F3E0;
+  --surface: #ffffff;
+  --text: #2d3329;
+  --text-muted: #5a6356;
+  --error: #b85450;
+  --success: #5a7d5a;
+  --border: rgba(119, 136, 115, 0.25);
+  --shadow: 0 2px 8px rgba(45, 51, 41, 0.08);
+  --shadow-md: 0 4px 16px rgba(45, 51, 41, 0.12);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
 }
+
 .app {
-  max-width: 680px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
 }
-.app-header { margin-bottom: 1.5rem; }
+
+.app-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--accent);
+}
+
+.app-header h1 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: var(--primary-dark);
+  letter-spacing: -0.02em;
+}
+
+/* About */
 .about { margin: 0.5rem 0; }
-.about-toggle { font-size: 0.9rem; color: #666; background: none; border: none; cursor: pointer; text-decoration: underline; }
-.about-content { margin-top: 0.5rem; padding: 1rem; background: #f5f5f5; border-radius: 8px; font-size: 0.9rem; }
+.about-toggle {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.about-toggle:hover { color: var(--primary-dark); }
+.about-content {
+  margin-top: 0.75rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  box-shadow: var(--shadow);
+}
+.about-content h4 { margin: 1rem 0 0.35rem; font-family: var(--font-heading); color: var(--primary-dark); font-size: 0.95rem; }
+.about-content h4:first-child { margin-top: 0; }
 .about-content ul { margin: 0.5rem 0 0 1.25rem; }
-.about-ref { margin-top: 0.75rem; font-size: 0.85rem; color: #666; }
-.identity-gate { margin: 2rem 0; }
-.identity-gate-error-block { margin-bottom: 0.75rem; }
-.identity-gate-error { color: #e57373; margin: 0 0 0.25rem; }
-.identity-gate-retry { margin-left: 0.5rem; font-size: 0.85rem; }
-.identity-gate-dev { color: #888; font-size: 0.9rem; }
-.identity-gate-captcha { margin: 1rem 0; min-height: 78px; }
-.identity-gate-recaptcha-help { margin: 1rem 0; padding: 0.75rem; background: #fff3cd; border-radius: 6px; font-size: 0.9rem; }
+.about-content code { background: var(--accent); padding: 0.15rem 0.4rem; border-radius: var(--radius-sm); font-size: 0.85em; }
+.about-ref { margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); }
+
+/* Identity gate */
+.identity-gate {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+.identity-gate h2 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.35rem;
+  color: var(--primary-dark);
+}
+.identity-gate > p { color: var(--text-muted); margin: 0 0 1rem; }
+.identity-gate-error-block { margin-bottom: 1rem; padding: 0.75rem; background: #fef2f2; border-radius: var(--radius-sm); border: 1px solid rgba(184,84,80,0.3); }
+.identity-gate-error { color: var(--error); margin: 0 0 0.25rem; }
+.identity-gate-retry {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.6rem;
+  background: var(--secondary);
+  color: var(--text);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 500;
+}
+.identity-gate-retry:hover { background: var(--secondary-dark); color: var(--surface); }
+.identity-gate-dev { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+
+.identity-gate-captcha {
+  margin: 1rem 0;
+  min-height: 78px;
+  min-width: 304px;
+  width: fit-content;
+  overflow: visible;
+  position: relative;
+  isolation: isolate;
+}
+.identity-gate-captcha iframe { display: block !important; }
+.identity-gate-recaptcha-help {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: var(--accent);
+  border: 1px solid var(--accent-dark);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
 .identity-gate-recaptcha-help ul { margin: 0.5rem 0 0 1.25rem; }
-.identity-gate-hint { font-size: 0.9rem; color: #888; margin: 0.5rem 0; }
-.identity-gate button { margin-top: 0.5rem; }
-.rumor-form textarea { width: 100%; margin-bottom: 0.5rem; }
-.form-error, .list-error { color: #c00; }
-.rumor-list { list-style: none; padding: 0; }
-.rumor-item { border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; border-radius: 6px; }
-.rumor-content { margin: 0 0 0.5rem; }
-.rumor-meta { font-size: 0.85rem; color: #666; margin-bottom: 0.5rem; }
-.rumor-delete { margin-left: 0.5rem; color: #c00; background: none; border: none; cursor: pointer; }
-.rumor-votes { display: flex; gap: 0.5rem; }
-.rumor-votes button { padding: 0.25rem 0.5rem; }
-.rumor-list-actions { margin-bottom: 0.75rem; }
-.rumor-item-deleted { opacity: 0.7; }
-.trust-badge { margin-left: 0.5rem; font-size: 0.85rem; }
-.trust-true { color: #0a0; }
-.trust-false { color: #c00; }
-.trust-neutral { color: #666; }
-.trust-unknown { color: #999; }
-.trust-finalized { font-size: 0.8rem; color: #666; }
+.identity-gate-recaptcha-help a { color: var(--primary-dark); font-weight: 500; }
+.identity-gate-hint { font-size: 0.9rem; color: var(--text-muted); margin: 0.75rem 0 0.5rem; }
+.identity-gate button {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--surface);
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.identity-gate button:hover:not(:disabled) { background: var(--primary-dark); }
+.identity-gate button:active:not(:disabled) { transform: scale(0.98); }
+.identity-gate button:disabled { opacity: 0.7; cursor: not-allowed; }
+
+/* Rumor form */
+.rumor-form {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.rumor-form textarea {
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  min-height: 80px;
+}
+.rumor-form textarea::placeholder { color: var(--text-muted); }
+.rumor-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(119, 136, 115, 0.2);
+}
+.form-error, .list-error { color: var(--error); margin: 0.5rem 0; font-size: 0.9rem; }
+.rumor-form button {
+  padding: 0.6rem 1.25rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--surface);
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.rumor-form button:hover:not(:disabled) { background: var(--primary-dark); }
+.rumor-form button:active:not(:disabled) { transform: scale(0.98); }
+.rumor-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Rumor list */
+.rumor-list-actions {
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+}
+.rumor-list-actions label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.rumor-list-actions input[type="checkbox"] { accent-color: var(--primary); }
+.rumor-list { list-style: none; padding: 0; margin: 0; }
+.rumor-item {
+  border: 1px solid var(--border);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.rumor-item-deleted { opacity: 0.75; background: var(--background); }
+.rumor-content {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+.rumor-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.rumor-date { margin-right: 0.5rem; }
+.rumor-delete {
+  margin-left: auto;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  color: var(--error);
+  background: transparent;
+  border: 1px solid rgba(184,84,80,0.4);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.rumor-delete:hover { background: #fef2f2; }
+.rumor-votes { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.rumor-votes button {
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary-dark);
+  background: var(--accent);
+  border: 1px solid var(--accent-dark);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.rumor-votes button:hover:not(:disabled) { background: var(--secondary); color: var(--text); }
+.rumor-votes button:disabled { opacity: 0.6; cursor: not-allowed; }
+.rumor-item-deleted .rumor-votes { display: none; }
+
+.trust-badge { font-weight: 600; font-size: 0.85rem; }
+.trust-true { color: var(--success); }
+.trust-false { color: var(--error); }
+.trust-neutral { color: var(--text-muted); }
+.trust-unknown { color: var(--text-muted); opacity: 0.8; }
+.trust-finalized { font-size: 0.8rem; font-weight: 400; color: var(--text-muted); margin-left: 0.25rem; }
+
+/* Loading / empty state */
+.list-loading, .list-empty { color: var(--text-muted); padding: 1.5rem; text-align: center; font-size: 1rem; }
+.list-loading { font-style: italic; }
+.list-error { padding: 1rem; background: #fef2f2; border-radius: var(--radius-sm); border: 1px solid rgba(184,84,80,0.3); margin: 1rem 0; }

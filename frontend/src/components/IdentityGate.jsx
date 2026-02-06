@@ -51,13 +51,14 @@ export function IdentityGate({ children }) {
       )}
       {RECAPTCHA_SITE_KEY ? (
         <>
-          <div className="identity-gate-captcha">
+          <div className="identity-gate-captcha" role="region" aria-label="reCAPTCHA verification">
             <ReCAPTCHA
               ref={recaptchaRef}
               sitekey={RECAPTCHA_SITE_KEY}
               onChange={(token) => { setCaptchaLoadError(null); setWidgetTimeout(false); handleVerify(token); }}
               onExpired={() => recaptchaRef.current?.reset()}
               onErrored={() => setCaptchaLoadError('script or widget failed to load')}
+              asyncScriptOnLoad={() => { setCaptchaLoadError(null); setWidgetTimeout(false); }}
               theme="light"
             />
           </div>
@@ -67,7 +68,7 @@ export function IdentityGate({ children }) {
                 {captchaLoadError ? `CAPTCHA could not load: ${captchaLoadError}.` : "If you don't see the “I'm not a robot” checkbox above:"}
               </p>
               <ul>
-                <li>Add <strong>localhost</strong> in <a href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener noreferrer">reCAPTCHA admin</a> → your site → Domains.</li>
+                <li>In <a href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener noreferrer">reCAPTCHA admin</a> → your site → Domains, add <strong>localhost</strong> and <strong>127.0.0.1</strong>.</li>
                 <li>Disable ad blockers or privacy extensions (uBlock, Privacy Badger, Brave shield, etc.) for this page.</li>
                 <li>Try a private/incognito window or another browser.</li>
               </ul>

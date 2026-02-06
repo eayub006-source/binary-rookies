@@ -60,7 +60,7 @@ export function RumorList() {
     } catch (_) {}
   }
 
-  if (loading) return <p>Loading rumors…</p>;
+  if (loading) return <p className="list-loading">Loading rumors…</p>;
   if (error) return <p className="list-error">Error: {error}</p>;
 
   return (
@@ -76,7 +76,7 @@ export function RumorList() {
         </label>
       </div>
       {rumors.length === 0 && (
-        <p>{includeDeleted ? 'No rumors (including archived).' : 'No rumors yet. Submit one above.'}</p>
+        <p className="list-empty">{includeDeleted ? 'No rumors (including archived).' : 'No rumors yet. Submit one above.'}</p>
       )}
       <ul className="rumor-list">
         {rumors.map((r) => (
