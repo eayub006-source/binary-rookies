@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+.app {
+  max-width: 640px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.identity-gate { margin: 2rem 0; }
+.identity-gate-error { color: #c00; }
+.identity-gate-dev { color: #666; font-size: 0.9rem; }
+.identity-gate button { margin-top: 0.5rem; }
+.rumor-form textarea { width: 100%; margin-bottom: 0.5rem; }
+.form-error, .list-error { color: #c00; }
+.rumor-list { list-style: none; padding: 0; }
+.rumor-item { border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; border-radius: 6px; }
+.rumor-content { margin: 0 0 0.5rem; }
+.rumor-meta { font-size: 0.85rem; color: #666; margin-bottom: 0.5rem; }
+.rumor-delete { margin-left: 0.5rem; color: #c00; background: none; border: none; cursor: pointer; }
+.rumor-votes { display: flex; gap: 0.5rem; }
+.rumor-votes button { padding: 0.25rem 0.5rem; }
+.rumor-list-actions { margin-bottom: 0.75rem; }
+.rumor-item-deleted { opacity: 0.7; }
+.trust-badge { margin-left: 0.5rem; font-size: 0.85rem; }
+.trust-true { color: #0a0; }
+.trust-false { color: #c00; }
+.trust-neutral { color: #666; }
+.trust-unknown { color: #999; }
+.trust-finalized { font-size: 0.8rem; color: #666; }
