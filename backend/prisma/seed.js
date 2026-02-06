@@ -1,6 +1,10 @@
+import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 
-const prisma = new PrismaClient();
+const connectionString = process.env.DATABASE_URL;
+const adapter = connectionString ? new PrismaPg({ connectionString }) : undefined;
+const prisma = new PrismaClient(adapter ? { adapter } : {});
 
 const R1 = 'a0000001-0001-4000-8000-000000000001';
 const R2 = 'a0000001-0001-4000-8000-000000000002';

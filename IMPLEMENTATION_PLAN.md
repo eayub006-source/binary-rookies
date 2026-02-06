@@ -27,9 +27,9 @@
 - **Users:** `anonymous_id` (PK), `reputation_score` (default 0.1), `created_at` (§5.2).
 - **Rumors:** `id` (uuid), `content`, `creator_id`, `created_at`, `deleted_at` (soft-delete), `final_trust_score`, `finalized_at` (§5.3).
 - **Votes:** `rumor_id`, `voter_id`, `vote` ('true' | 'false' | 'neutral'), `created_at`. Unique on `(rumor_id, voter_id)` (§3, §4.1).
-- **Supabase:** Migration in `supabase/migrations/001_initial_schema.sql`. Backend uses `@supabase/supabase-js`; `src/db/` exposes query helpers that **exclude soft-deleted rumors** for all trust/reputation use (§5.4).
+- **Supabase (Postgres):** Schema in `backend/prisma/schema.prisma`. Backend uses **Prisma**; `src/db/` exposes query helpers that **exclude soft-deleted rumors** for all trust/reputation use (§5.4).
 
-**Run migration:** In Supabase Dashboard → SQL Editor, run the contents of `supabase/migrations/001_initial_schema.sql`, or use `supabase db push` if using Supabase CLI.
+**Apply schema and seed:** From `backend/`: `npx prisma generate && npx prisma db push && npm run db:seed`. See [docs/PRISMA_SUPABASE.md](./docs/PRISMA_SUPABASE.md).
 
 **Commit:** `feat(db): schema for users, rumors, votes with soft-delete (Supabase)`
 
@@ -131,7 +131,7 @@
 | Item | Choice | Note |
 |------|--------|------|
 | Backend | Node + Express | — |
-| DB | **Supabase (Postgres)** | All tables and queries use Supabase; run migration from `supabase/migrations/` (Dashboard SQL Editor or `supabase db push`). |
+| DB | **Supabase (Postgres)** | Prisma in `backend/prisma/`; `npx prisma db push` and `npm run db:seed`. See [docs/PRISMA_SUPABASE.md](./docs/PRISMA_SUPABASE.md). |
 | CAPTCHA | reCAPTCHA v2 | Real integration; site key (frontend) + secret (backend). |
 | Fingerprint | FingerprintJS (open-source) | Real client fingerprint; send fingerprint to backend; server hashes with salt. |
 | Finalization window | 7 days | As in §5.2, §5.3. |

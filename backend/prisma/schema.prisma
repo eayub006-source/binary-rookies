@@ -1,14 +1,12 @@
-// Supabase (PostgreSQL). Get DATABASE_URL and DIRECT_URL from Dashboard → Connect → ORMs → Prisma.
-// Replace [YOUR-PASSWORD] with your database password (Project Settings → Database).
+// Supabase (PostgreSQL). Connection URLs are in prisma.config.ts (Prisma 7).
+// DATABASE_URL = pooled (runtime). DIRECT_URL = direct (CLI: db push, migrate).
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
 }
 
 model User {

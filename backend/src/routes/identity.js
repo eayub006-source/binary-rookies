@@ -26,7 +26,7 @@ router.post('/register-or-lookup', async (req, res) => {
   } catch (e) {
     console.error('Identity error:', e);
     const message = e.message || 'Identity registration failed';
-    const code = e.code === 'PGRST116' || e.message?.includes('relation') ? 503 : 500;
+    const code = e.message?.includes('relation') || e.message?.includes('table') || e.message?.includes('does not exist') ? 503 : 500;
     res.status(code).json({ error: message });
   }
 });
