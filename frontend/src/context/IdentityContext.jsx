@@ -33,12 +33,18 @@ export function IdentityProvider({ children }) {
 
   const clearError = useCallback(() => setError(null), []);
 
+  const clearIdentity = useCallback(() => {
+    if (typeof window !== 'undefined') localStorage.removeItem(STORAGE_KEY);
+    setAnonymousId(null);
+  }, []);
+
   const value = {
     anonymousId,
     error,
     loading,
     ensureIdentity,
     clearError,
+    clearIdentity,
     isReady: !!anonymousId,
   };
 

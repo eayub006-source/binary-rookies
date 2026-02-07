@@ -9,7 +9,7 @@ export function About() {
       </button>
       {open && (
         <div className="about-content">
-          <p><strong>Anonymous Campus Rumor System</strong> — truth from consensus, not from admins. Design: SUBMISSION_DAY1.md (this repo).</p>
+          <p><strong>Anonymous Campus Rumor System</strong> — we don’t ask who controls truth; we ask who has earned trust over time. Truth from consensus, not from admins. Design: SUBMISSION_DAY1.md (this repo).</p>
 
           <h4>Three layers</h4>
           <ul>
@@ -27,8 +27,8 @@ export function About() {
           <h4>Deleted rumors</h4>
           <p>Soft-deleted rumors and their votes are <strong>excluded from all</strong> trust and reputation calculations. Deleted data does not affect newer rumors.</p>
 
-          <h4>Rate limiting & bot mitigation</h4>
-          <p>Per identity: limited rumors per day and votes per hour. CAPTCHA at identity creation. Reputation: voters who consistently disagree with consensus get lower reputation, so their votes have negligible weight. A minority of coordinated liars cannot reliably game the system without building reputation (which requires voting “correctly” and thus not distorting).</p>
+          <h4>Bot manipulation & rate limiting</h4>
+          <p><strong>CAPTCHA</strong> at first use blocks automated signups (bot manipulation protection). Per identity: limited rumors per day and votes per hour. Reputation: voters who consistently disagree with consensus get lower reputation, so their votes have negligible weight. New accounts under 48h have reduced vote weight. A minority of coordinated liars cannot reliably game the system without building reputation (which requires voting “correctly” and thus not distorting).</p>
 
           <p className="about-ref">BINARY ROOKIES — Eshal Ayub, Momna Khalid, Ayan Asif Hashmi, Fahad Mehmood.</p>
         </div>

@@ -19,15 +19,16 @@ model User {
 }
 
 model Rumor {
-  id               String    @id @default(uuid()) @db.Uuid
-  content          String
-  creator_id       String
-  created_at       DateTime  @default(now())
-  deleted_at       DateTime?
+  id                String    @id @default(uuid()) @db.Uuid
+  content           String
+  creator_id        String
+  created_at        DateTime  @default(now())
+  deleted_at        DateTime?
+  topic_cluster_id  String?   @db.Uuid  // For grouping related rumors; excludes deleted from cluster influence (§4.1)
   final_trust_score Float?
-  finalized_at     DateTime?
-  creator          User      @relation("Creator", fields: [creator_id], references: [anonymous_id])
-  votes            Vote[]
+  finalized_at      DateTime?
+  creator           User      @relation("Creator", fields: [creator_id], references: [anonymous_id])
+  votes             Vote[]
 }
 
 model Vote {

@@ -32,6 +32,8 @@ Backend: `http://localhost:3001` · Frontend: e.g. `http://localhost:5173`
 
 **reCAPTCHA:** [docs/RECAPTCHA_SETUP.md](./docs/RECAPTCHA_SETUP.md).
 
+**Without a database (e.g. Supabase paused):** Set `USE_DEMO_STORE=1` in `backend/.env`; then start backend and frontend without running `db push` or `db:seed`. The app uses an in-memory store.
+
 ---
 
 ## SUBMISSION_DAY1 alignment
@@ -41,7 +43,7 @@ Backend: `http://localhost:3001` · Frontend: e.g. `http://localhost:5173`
 | §3–4 Identity | Fingerprint + salt → `anonymous_id`; one-time CAPTCHA; hash only stored. |
 | §3–4 Rumor | Submit rumor; vote once per (rumor_id, voter_id); true/false/neutral. |
 | §4.1 Data model | `User` (anonymous_id, reputation_score, accuracy_metric, created_at), `Rumor` (id, content, creator_id, created_at, deleted_at, final_trust_score, finalized_at), `Vote` (rumor_id, voter_id, vote). |
-| §5.1 Trust formula | Reputation-weighted sum of vote weights; score in [−1, 1]. |
+| §5.1 Trust formula | Reputation-weighted sum; 48h new-account weight 0.25×; variance σ_r; score in [−1, 1]. |
 | §5.2 Reputation | Updated from finalized outcomes; agree ↑, disagree ↓; new users start at 0.1. |
 | §5.3 Stability | 7-day finalization; outcome fixed; display final score and finalized_at. |
 | §5.4 Deleted rumors | Soft-delete; excluded from all trust and reputation. |

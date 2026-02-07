@@ -59,16 +59,20 @@ Full design: **SUBMISSION_DAY1.md**.
 
 **Trust score** (in `[−1, 1]`):
 
-```
-Trust(rumor) = Σ (voteWeight × reputation(voter)) / Σ reputation(voter)
-```
-*(Vote weights: true = 1, false = −1, neutral = 0.)*
+\[
+T(r) = \frac{\sum_i w_i \cdot v_i}{\sum_i |w_i|} \cdot \sigma_r
+\]
 
-- New users start with reputation 0.1.
-- After 7 days, rumor is **finalized**: outcome is true (score > 0.6), false (score < −0.6), or neutral.  
-- Voters who agreed with final outcome get +0.05 rep; disagreed get −0.05; rep clamped in [−1, 1].
+- \( w_i = \text{reputation}_i \cdot \text{accountAgeFactor} \cdot \text{voteAgeFactor} \); \( v_i \in \{-1, 0, +1\} \) (false, neutral, true).
+- **Account age:** votes from accounts &lt; 48h old count at **0.25×** weight (bot resistance).
+- **Vote age:** votes from the last 24h count at **0.5×** (late swarms discounted).
+- **Variance:** \( \sigma_r = \max(0, 1 - \text{vote variance}/2) \) — high disagreement lowers confidence.
+- **Reputation:** \( \in [0.05, 1.0] \); new users 0.1; agree with final outcome → +0.05, disagree → −0.05.
+- After **7 days**, rumor is **finalized** (outcome immutable).
 
 **Code:** `backend/src/services/trust.js` — `computeTrustScore()`, `finalizeRumor()`, `runFinalizationJob()`.
+
+**No epistemic authority / gameability proof:** see **ALIGNMENT.md**.
 
 ---
 
@@ -175,12 +179,12 @@ npm install && npm run dev
 |-------------------------|----------------|
 | §3–4 Identity | Fingerprint + salt → `anonymous_id`; one-time CAPTCHA; hash only stored. |
 | §3–4 Rumor | Submit rumor; one vote per (rumor_id, voter_id); true/false/neutral. |
-| §4.1 Data model | User, Rumor (with deleted_at, final_trust_score, finalized_at), Vote. |
-| §5.1 Trust formula | Reputation-weighted sum; score in [−1, 1]. |
+| §4.1 Data model | User, Rumor (topic_cluster_id, deleted_at, final_trust_score, finalized_at), Vote. Rep ∈ [0.05, 1.0]. |
+| §5.1 Trust formula | Rep-weighted + time/variance weighting; 48h new-account 0.25×; score in [−1, 1]. |
 | §5.2 Reputation | Updated from finalized outcomes; agree ↑, disagree ↓; new users 0.1. |
 | §5.3 Stability | 7-day finalization; outcome fixed; displayed in UI. |
 | §5.4 Deleted rumors | Soft-delete; excluded from all trust and reputation (queries). |
-| §5.5 Bot/Sybil | CAPTCHA, rate limits, reputation weighting. |
+| §5.5 Bot/Sybil | CAPTCHA, rate limits, rep weighting, 48h vote-weight delay. |
 | §6 Gameability | Minority liars cannot reliably game without building rep (see About in app). |
 
 ---

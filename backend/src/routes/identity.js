@@ -15,7 +15,8 @@ router.post('/register-or-lookup', async (req, res) => {
       return res.status(400).json({ error: 'fingerprint required' });
     }
     const secretSet = process.env.RECAPTCHA_SECRET_KEY && process.env.RECAPTCHA_SECRET_KEY !== 'replace-with-recaptcha-secret';
-    if (secretSet && !captchaToken) {
+    const demoStore = process.env.USE_DEMO_STORE === '1';
+    if (secretSet && !captchaToken && !demoStore) {
       return res.status(400).json({ error: 'captchaToken required' });
     }
     if (captchaToken && !(await verifyCaptcha(captchaToken))) {

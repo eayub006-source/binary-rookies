@@ -11,6 +11,7 @@ function TrustBadge({ rumor }) {
   const cls = `trust-badge trust-${outcome}`;
   return (
     <span className={cls} title={finalized ? `Finalized ${new Date(rumor.finalized_at).toLocaleString()}` : 'Current trust score'}>
+      {finalized && <span className="trust-finalized-badge">Finalized</span>}
       {label}
       {finalized && <span className="trust-finalized"> ({new Date(rumor.finalized_at).toLocaleDateString()})</span>}
     </span>
@@ -93,6 +94,7 @@ export function RumorList() {
             </div>
             {!r.deleted_at && (
               <div className="rumor-votes">
+                <p className="rumor-votes-hint">One vote per rumor. Weighted by your reputation.</p>
                 <button
                   type="button"
                   onClick={() => handleVote(r.id, 'true')}

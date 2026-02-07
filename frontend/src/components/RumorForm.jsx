@@ -29,7 +29,7 @@ export function RumorForm({ onCreated }) {
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder="Submit a rumor (anonymous)..."
+        placeholder="e.g. The library will close early during finals week."
         rows={3}
         maxLength={2000}
         disabled={loading}

@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import prisma from '../db/prisma.js';
+import * as demoStore from '../db/demoStore.js';
 
 const DEFAULT_REPUTATION = 0.1;
 const SALT = process.env.IDENTITY_SALT || 'dev-salt-change-in-production';
@@ -32,6 +33,10 @@ export async function verifyCaptcha(token) {
 
 export async function registerOrLookup(fingerprint) {
   const anonymousId = computeAnonymousId(fingerprint);
+  if (process.env.USE_DEMO_STORE === '1') {
+    demoStore.demoRegisterUser(anonymousId);
+    return { anonymous_id: anonymousId };
+  }
   const existing = await prisma.user.findUnique({ where: { anonymous_id: anonymousId } });
   if (existing) return { anonymous_id: existing.anonymous_id };
 

@@ -4,7 +4,20 @@ This app uses **reCAPTCHA v2 (“I'm not a robot” checkbox)** for the identity
 
 ---
 
-## 1. Create reCAPTCHA keys
+## 0. Test keys (no domain setup)
+
+For **local development or demo**, you can use **Google’s official test keys**. They work on **any domain** (localhost, 127.0.0.1, LAN IP) with no admin configuration:
+
+|          | Value |
+|----------|--------|
+| Site key (frontend) | `6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI` |
+| Secret key (backend) | `6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe` |
+
+Set these in `frontend/.env` and `backend/.env`. The CAPTCHA will always pass and the widget will show on any URL. **Do not use test keys in production.**
+
+---
+
+## 1. Create reCAPTCHA keys (production)
 
 1. Open **[Google reCAPTCHA Admin](https://www.google.com/recaptcha/admin)** and sign in.
 2. Click **“+”** or **“Create”** to register a new site.

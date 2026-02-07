@@ -2,6 +2,8 @@ import prisma from './prisma.js';
 
 /**
  * Queries that exclude soft-deleted rumors for trust/reputation (§5.4).
+ * All trust and reputation logic must use these (never rumorByIdAny for scoring).
+ * Reputation updates in finalizeRumor only run for rumors from rumorsToFinalize (deleted_at IS NULL).
  */
 
 export async function rumorsActive() {
